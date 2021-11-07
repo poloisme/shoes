@@ -1,11 +1,11 @@
-import express from "express";
-import bodyParser from "body-parser";
-import dotenv from "dotenv";
-import morgan from "morgan";
-import methodOverride from "method-override";
-import viewEngine from "./configs/viewEngine";
-import initRoute from "./routes/web";
-import connectDB from "./configs/connectDB";
+const express = require("express");
+const bodyParser = require("body-parser");
+const dotenv = require("dotenv");
+const morgan = require("morgan");
+const methodOverride = require("method-override");
+const viewEngine = require("./configs/viewEngine");
+const initRoute = require("./routes/web");
+const connectDB = require("./configs/connectDB");
 
 dotenv.config();
 

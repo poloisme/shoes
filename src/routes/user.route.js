@@ -1,8 +1,7 @@
-import express from "express";
-
+const express = require("express");
 const router = express.Router();
 
-router.route("/", (req, res) => {
+router.route("/").get((req, res) => {
   res.json("oke");
 });
 

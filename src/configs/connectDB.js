@@ -1,8 +1,9 @@
 const { Sequelize } = require("sequelize");
 const { development } = require("./config.json");
-const { database, host, password, host, dialect, logging } = development;
 
-const sequelize = new Sequelize(database, host, password, {
+const { database, host, username, password, dialect, logging } = development;
+
+const sequelize = new Sequelize(database, username, password, {
   host: host,
   dialect: dialect,
   logging: logging,
