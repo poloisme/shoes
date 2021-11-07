@@ -13,7 +13,6 @@ module.exports = (sequelize, DataTypes) => {
   }
   Order.init(
     {
-      id: DataTypes.INTEGER.UNSIGNED,
       or_date: DataTypes.DATE,
       or_total: DataTypes.DECIMAL(11, 2),
       or_name: DataTypes.STRING,

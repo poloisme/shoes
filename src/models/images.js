@@ -13,7 +13,6 @@ module.exports = (sequelize, DataTypes) => {
   }
   Images.init(
     {
-      id: DataTypes.INTEGER.UNSIGNED,
       file: DataTypes.STRING,
       product_id: DataTypes.INTEGER.UNSIGNED,
     },

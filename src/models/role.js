@@ -13,7 +13,6 @@ module.exports = (sequelize, DataTypes) => {
   }
   Role.init(
     {
-      id: DataTypes.INTEGER.UNSIGNED,
       role: DataTypes.ENUM("admin", "manager", "salesclerk", "customer"),
     },
     {

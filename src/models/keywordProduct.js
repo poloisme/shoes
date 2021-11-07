@@ -13,7 +13,6 @@ module.exports = (sequelize, DataTypes) => {
   }
   KeywordProduct.init(
     {
-      id: DataTypes.INTEGER.UNSIGNED,
       keyword_id: DataTypes.INTEGER.UNSIGNED,
       product_id: DataTypes.INTEGER.UNSIGNED,
     },

@@ -13,7 +13,6 @@ module.exports = (sequelize, DataTypes) => {
   }
   DetailOrder.init(
     {
-      id: DataTypes.INTEGER.UNSIGNED,
       quantity: DataTypes.INTEGER(3).UNSIGNED,
       order_id: DataTypes.INTEGER.UNSIGNED,
       product_id: DataTypes.INTEGER.UNSIGNED,

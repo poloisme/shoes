@@ -13,7 +13,6 @@ module.exports = (sequelize, DataTypes) => {
   }
   Product.init(
     {
-      id: DataTypes.INTEGER.UNSIGNED,
       pro_name: DataTypes.STRING,
       pro_slug: DataTypes.STRING,
       pro_description: DataTypes.STRING,
