@@ -6,6 +6,7 @@ const methodOverride = require("method-override");
 const viewEngine = require("./configs/viewEngine");
 const initRoute = require("./routes/web");
 const connectDB = require("./configs/connectDB");
+const cors = require("./middlewares/cors");
 
 dotenv.config();
 
@@ -16,6 +17,7 @@ app.use(morgan("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
+app.use(cors);
 
 //config views engine
 viewEngine(app);

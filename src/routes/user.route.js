@@ -9,8 +9,18 @@ const {
   schemas,
 } = require("../middlewares/validateData");
 
+router.route("/").get(UserController.getAll);
+
+router.route("/count").get(UserController.countAndGet);
+
 router
   .route("/create")
   .post(validateBody(schemas.userSchemaCreate), UserController.create);
+
+router
+  .route("/:id", validateParam(schemas.idUserSchema, "id"))
+  .get(UserController.getOne)
+  .put(validateBody(schemas.userSchemaUpdate), UserController.update)
+  .delete(UserController.remove);
 
 module.exports = router;

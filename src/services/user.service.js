@@ -23,7 +23,99 @@ const createNewUser = (newUser) => {
     }
   });
 };
+//get all user
+const getAllUser = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const res = await db.User.findAll({
+        attributes: ["username", "email", "status", "role_id"],
+      });
+      resolve({ status: "success", data: res });
+    } catch (err) {
+      reject(err);
+    }
+  });
+};
+//get user by id
+const getUserByID = (userID) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const res = await db.User.findOne({
+        attributes: ["username", "email", "status", "role_id"],
+        where: { id: userID },
+      });
+      if (res === null) {
+        throw new Error("User not found!");
+      }
+      resolve({ status: "success", data: res });
+    } catch (err) {
+      reject(err);
+    }
+  });
+};
+//count users
+const countAndGetUsers = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { count, rows } = await db.User.findAndCountAll({
+        attributes: ["username", "email", "status", "role_id"],
+        // offset: 10, same skip
+        // limit: 1,
+      });
+      resolve({ status: "success", data: { count, rows } });
+    } catch (err) {
+      reject(err);
+    }
+  });
+};
+//update user
+const updateUser = (userID, user) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const res = await db.User.update(
+        { ...user },
+        {
+          where: {
+            id: userID,
+          },
+        }
+      );
+      if (res < 1) {
+        throw new Error("Update fail!");
+      }
+      resolve({
+        status: "success",
+        message: `update ${res} row`,
+      });
+    } catch (err) {
+      reject(err);
+    }
+  });
+};
+//delete user
+const deleteUser = (userID) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const res = await db.User.destroy({
+        where: {
+          id: userID,
+        },
+      });
+      if (res < 1) {
+        throw new Error("Remove fail!");
+      }
+      resolve({ status: "success", message: `remove ${res} row` });
+    } catch (err) {
+      reject(err);
+    }
+  });
+};
 
 module.exports = {
   createNewUser,
+  getAllUser,
+  getUserByID,
+  countAndGetUsers,
+  updateUser,
+  deleteUser,
 };
