@@ -18,6 +18,7 @@ const signUp = async (req, res, next) => {
     const token = endCodedToken({
       id: response.data.id,
       username: response.data.username,
+      role_id: response.data.role_id,
     });
     res.setHeader("authorization", token);
     return res.status(200).json({
@@ -31,7 +32,7 @@ const signUp = async (req, res, next) => {
 const signIn = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    const response = await User.findUserByEmail(email);
+    const response = await userService.getUser({ email });
     //check password
     const validPassword = await bcrypt.compare(
       password,
@@ -42,13 +43,11 @@ const signIn = async (req, res, next) => {
       err.status = 400;
       return next(err);
     }
-    //get roles of user
-    const roles = await Role.getRoleByUserID(response.data.id);
     //endCodeToken and set to header
     const token = endCodedToken({
       id: response.data.id,
       username: response.data.username,
-      roles: roles.data,
+      role_id: response.data.role_id,
     });
     res.setHeader("authorization", token);
     return res.status(200).json({
@@ -62,4 +61,4 @@ const signIn = async (req, res, next) => {
 module.exports = {
   signUp,
   signIn,
-};  
+};

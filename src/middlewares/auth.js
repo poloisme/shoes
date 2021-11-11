@@ -1,7 +1,7 @@
 var jwt = require("jsonwebtoken");
 
-//authen token
-const authenToken = (req, res, next) => {
+//auth token
+const authToken = (req, res, next) => {
   const authorizationHeader = req.headers["authorization"];
   // 'Beaer [token]'
   const token = authorizationHeader;
@@ -23,23 +23,46 @@ const authenToken = (req, res, next) => {
     return next();
   });
 };
-
-//authen route users
-const authenAdmin = (req, res, next) => {
+//auth admin users
+const authAdmin = (req, res, next) => {
   data = res.locals.data;
-  data.roles.forEach((role) => {
-    //check user_role_id === 1 is admin
-    if (role.user_role_id === 1) {
-      return next();
-    } else {
-      const err = new Error("Forbidden!");
-      err.status = 403;
-      return next(err);
-    }
-  });
+  //check user_role_id === 1 is admin
+  if (role.role_id === 1) {
+    return next();
+  } else {
+    const err = new Error("Forbidden!");
+    err.status = 403;
+    return next(err);
+  }
+};
+//auth manager users
+const authManager = (req, res, next) => {
+  data = res.locals.data;
+  //check user_role_id === 2 is manager
+  if (role.role_id === 2) {
+    return next();
+  } else {
+    const err = new Error("Forbidden!");
+    err.status = 403;
+    return next(err);
+  }
+};
+//auth salesclerk users
+const authSalesclerk = (req, res, next) => {
+  data = res.locals.data;
+  //check user_role_id === 3 is salesclerk
+  if (role.role_id === 3) {
+    return next();
+  } else {
+    const err = new Error("Forbidden!");
+    err.status = 403;
+    return next(err);
+  }
 };
 
 module.exports = {
-  authenToken,
-  authenAdmin,
+  authToken,
+  authAdmin,
+  authManager,
+  authSalesclerk,
 };

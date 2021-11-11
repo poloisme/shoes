@@ -21,7 +21,7 @@ const getAll = async (req, res, next) => {
 //[GET] /users/:id
 const getOne = async (req, res, next) => {
   try {
-    const response = await userService.getUserByID(req.params.id);
+    const response = await userService.getUser({ id: req.params.id });
     return res.status(200).json(response);
   } catch (err) {
     next(err);
@@ -39,7 +39,10 @@ const countAndGet = async (req, res, next) => {
 //[PUT] /:id
 const update = async (req, res, next) => {
   try {
-    const response = await userService.updateUser(req.params.id, req.body);
+    const response = await userService.updateUser(
+      { id: req.params.id },
+      req.body
+    );
     return res.status(200).json(response);
   } catch (err) {
     next(err);
@@ -48,7 +51,7 @@ const update = async (req, res, next) => {
 //[DELETE] /:id
 const remove = async (req, res, next) => {
   try {
-    const response = await userService.deleteUser(req.params.id);
+    const response = await userService.deleteUser({ id: req.params.id });
     return res.status(200).json(response);
   } catch (err) {
     next(err);

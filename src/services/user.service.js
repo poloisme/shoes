@@ -17,7 +17,11 @@ const createNewUser = (newUser) => {
         status: newUser.status || 10,
         role_id: newUser.role_id || 4,
       });
-      resolve({ status: "success", message: `create new user: ${user.id}` });
+      resolve({
+        status: "success",
+        message: `create new user: ${user.id}`,
+        data: user,
+      });
     } catch (err) {
       reject(err);
     }
@@ -37,12 +41,12 @@ const getAllUser = () => {
   });
 };
 //get user by id
-const getUserByID = (userID) => {
+const getUser = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
       const res = await db.User.findOne({
-        attributes: ["username", "email", "status", "role_id"],
-        where: { id: userID },
+        attributes: ["username", "password_hash", "email", "status", "role_id"],
+        where: { ...data },
       });
       if (res === null) {
         throw new Error("User not found!");
@@ -69,15 +73,13 @@ const countAndGetUsers = () => {
   });
 };
 //update user
-const updateUser = (userID, user) => {
+const updateUser = (data, user) => {
   return new Promise(async (resolve, reject) => {
     try {
       const res = await db.User.update(
         { ...user },
         {
-          where: {
-            id: userID,
-          },
+          where: { ...data },
         }
       );
       if (res < 1) {
@@ -93,13 +95,11 @@ const updateUser = (userID, user) => {
   });
 };
 //delete user
-const deleteUser = (userID) => {
+const deleteUser = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
       const res = await db.User.destroy({
-        where: {
-          id: userID,
-        },
+        where: { ...data },
       });
       if (res < 1) {
         throw new Error("Remove fail!");
@@ -114,7 +114,7 @@ const deleteUser = (userID) => {
 module.exports = {
   createNewUser,
   getAllUser,
-  getUserByID,
+  getUser,
   countAndGetUsers,
   updateUser,
   deleteUser,

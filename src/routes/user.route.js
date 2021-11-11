@@ -9,18 +9,30 @@ const {
   schemas,
 } = require("../middlewares/validateData");
 
-router.route("/").get(UserController.getAll);
+const { authToken, authAdmin } = require("../middlewares/auth");
 
-router.route("/count").get(UserController.countAndGet);
+router.route("/").get(authToken, UserController.getAll);
+
+router.route("/count").get(authToken, UserController.countAndGet);
 
 router
   .route("/create")
-  .post(validateBody(schemas.userSchemaCreate), UserController.create);
+  .post(
+    authToken,
+    authAdmin,
+    validateBody(schemas.userSchemaCreate),
+    UserController.create
+  );
 
 router
   .route("/:id", validateParam(schemas.idUserSchema, "id"))
-  .get(UserController.getOne)
-  .put(validateBody(schemas.userSchemaUpdate), UserController.update)
-  .delete(UserController.remove);
+  .get(authToken, UserController.getOne)
+  .put(
+    authToken,
+    authAdmin,
+    validateBody(schemas.userSchemaUpdate),
+    UserController.update
+  )
+  .delete(authToken, authAdmin, UserController.remove);
 
 module.exports = router;
