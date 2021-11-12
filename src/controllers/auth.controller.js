@@ -1,7 +1,7 @@
 const userService = require("../services/user.service");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
-const { endCodedToken } = require("../util/handleJWT");
+const { enCodedToken } = require("../util/handleJWT");
 
 //[POST] /singup
 const signUp = async (req, res, next) => {
@@ -15,11 +15,14 @@ const signUp = async (req, res, next) => {
       password_hash,
     };
     const response = await userService.createNewUser(user);
-    const token = endCodedToken({
-      id: response.data.id,
-      username: response.data.username,
-      role_id: response.data.role_id,
-    });
+    const token = await enCodedToken(
+      {
+        id: response.data.id,
+        username: response.data.username,
+        role_id: response.data.role_id,
+      },
+      process.env.JWT_SECRET
+    );
     res.setHeader("authorization", token);
     return res.status(200).json({
       response,
@@ -44,11 +47,14 @@ const signIn = async (req, res, next) => {
       return next(err);
     }
     //endCodeToken and set to header
-    const token = endCodedToken({
-      id: response.data.id,
-      username: response.data.username,
-      role_id: response.data.role_id,
-    });
+    const token = await enCodedToken(
+      {
+        id: response.data.id,
+        username: response.data.username,
+        role_id: response.data.role_id,
+      },
+      process.env.JWT_SECRET
+    );
     res.setHeader("authorization", token);
     return res.status(200).json({
       response,

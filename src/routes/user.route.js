@@ -9,7 +9,7 @@ const {
   schemas,
 } = require("../middlewares/validateData");
 
-const { authToken, authAdmin } = require("../middlewares/auth");
+const { authToken, authRole } = require("../middlewares/auth");
 
 router.route("/").get(authToken, UserController.getAll);
 
@@ -19,7 +19,7 @@ router
   .route("/create")
   .post(
     authToken,
-    authAdmin,
+    authRole([1]),
     validateBody(schemas.userSchemaCreate),
     UserController.create
   );
@@ -29,10 +29,10 @@ router
   .get(authToken, UserController.getOne)
   .put(
     authToken,
-    authAdmin,
+    authRole([1]),
     validateBody(schemas.userSchemaUpdate),
     UserController.update
   )
-  .delete(authToken, authAdmin, UserController.remove);
+  .delete(authToken, authRole([1]), UserController.remove);
 
 module.exports = router;

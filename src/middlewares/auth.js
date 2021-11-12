@@ -1,68 +1,44 @@
-var jwt = require("jsonwebtoken");
+const { deCodedToken } = require("../util/handleJWT");
 
 //auth token
-const authToken = (req, res, next) => {
-  const authorizationHeader = req.headers["authorization"];
-  // 'Beaer [token]'
-  const token = authorizationHeader;
+const authToken = async (req, res, next) => {
+  try {
+    const authorizationHeader = req.headers["authorization"];
+    // 'Beaer [token]'
+    const token = authorizationHeader;
 
-  if (!token) {
-    const err = new Error("unauthorize!");
-    err.status = 401;
-    return next(err);
-  }
-
-  jwt.verify(token, process.env.JWT_SECRET, (error, data) => {
-    if (error) {
-      const err = new Error(error);
+    if (!token) {
+      const err = new Error("unauthorize!");
       err.status = 401;
       return next(err);
     }
+    const data = await deCodedToken(token, process.env.JWT_SECRET);
     //send data to next middleware
     res.locals.data = data;
-    return next();
-  });
+    next();
+  } catch (err) {
+    next(err);
+  }
 };
 //auth admin users
-const authAdmin = (req, res, next) => {
-  data = res.locals.data;
-  //check user_role_id === 1 is admin
-  if (role.role_id === 1) {
-    return next();
-  } else {
-    const err = new Error("Forbidden!");
-    err.status = 403;
-    return next(err);
-  }
-};
-//auth manager users
-const authManager = (req, res, next) => {
-  data = res.locals.data;
-  //check user_role_id === 2 is manager
-  if (role.role_id === 2) {
-    return next();
-  } else {
-    const err = new Error("Forbidden!");
-    err.status = 403;
-    return next(err);
-  }
-};
-//auth salesclerk users
-const authSalesclerk = (req, res, next) => {
-  data = res.locals.data;
-  //check user_role_id === 3 is salesclerk
-  if (role.role_id === 3) {
-    return next();
-  } else {
-    const err = new Error("Forbidden!");
-    err.status = 403;
-    return next(err);
-  }
+const authRole = (roles) => {
+  return (req, res, next) => {
+    try {
+      const data = res.locals.data;
+      if (roles.includes(data.role_id)) {
+        return next();
+      } else {
+        const err = new Error("Forbidden!");
+        err.status = 403;
+        return next(err);
+      }
+    } catch (err) {
+      next(err);
+    }
+  };
 };
 
 module.exports = {
   authToken,
-  authAdmin,
-  authManager,
-  authSalesclerk,
+  authRole,
 };

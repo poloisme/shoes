@@ -2,30 +2,38 @@ const Joi = require("joi");
 
 const validateBody = (schema) => {
   return (req, res, next) => {
-    const validateResult = schema.validate(req.body);
-    if (validateResult.error) {
-      const err = new Error(validateResult.error);
-      err.status = 400;
-      return next(err);
-    } else {
-      req.body = {
-        ...validateResult.value,
-      };
-      next();
+    try {
+      const validateResult = schema.validate(req.body);
+      if (validateResult.error) {
+        const err = new Error(validateResult.error);
+        err.status = 400;
+        return next(err);
+      } else {
+        req.body = {
+          ...validateResult.value,
+        };
+        next();
+      }
+    } catch (err) {
+      next(err);
     }
   };
 };
 
 const validateParam = (schema, param) => {
   return (req, res, next) => {
-    const validateResult = schema.validate({ param: req.params[param] });
-    if (validateResult.error) {
-      const err = new Error(validateResult.error);
-      err.status = 400;
-      return next(err);
-    } else {
-      req.params[param] = validateResult.value.param;
-      next();
+    try {
+      const validateResult = schema.validate({ param: req.params[param] });
+      if (validateResult.error) {
+        const err = new Error(validateResult.error);
+        err.status = 400;
+        return next(err);
+      } else {
+        req.params[param] = validateResult.value.param;
+        next();
+      }
+    } catch (err) {
+      next(err);
     }
   };
 };
