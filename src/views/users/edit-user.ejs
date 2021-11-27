@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/head.ejs') %>
+  </head>
+  <body class="g-sidenav-show bg-gray-100">
+    <!-- Navbar left -->
+    <%- include('../partials/navbar-left.ejs') %>
+    <!-- End Navbar left -->
+    <main
+      class="
+        main-content
+        position-relative
+        max-height-vh-100
+        h-100
+        mt-1
+        border-radius-lg
+      "
+    >
+      <!--Navbar top -->
+      <%- include('../partials/navbar-top.ejs') %>
+      <!-- End Navbar top -->
+      <!--create user body-->
+      <div class="container-fluid py-4">
+        <div class="row">
+          <div class="col-12">
+            <div class="multisteps-form">
+              <%- include('../partials/users/form-edit-user.ejs') %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <%- include('../partials/fixed-plugin.ejs') %>
+  </body>
+  <%- include('../partials/scripts.ejs') %>
+  <!-- <script src="/assets/js/plugins/dropzone.js"></script> -->
+  <!-- <script src="/assets/js/plugins/multistep-form.js"></script> -->
+  <!-- <script src="/assets/js/plugins/quill.js"></script>
+  <script src="/assets/js/plugins/choices.min.js"></script> -->
+  <script type="text/javascript">
+    function readURL(input) {
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        const img = document.getElementById("preview-avatar");
+        reader.onload = function (e) {
+          img.setAttribute("src", e.target.result);
+        };
+        reader.readAsDataURL(input.files[0]);
+        document.forms["edit-avatar"].submit();
+      }
+    }
+  </script>
+  <script>
+    // Add the following code if you want the name of the file appear on select
+    $(".custom-file-input").on("change", function () {
+      var fileName = $(this).val().split("\\").pop();
+      $(this)
+        .siblings(".custom-file-label")
+        .addClass("selected")
+        .html(fileName);
+    });
+  </script>
+  <script>
+    $().ready(function () {
+      $("#edit-user").validate({
+        rules: {
+          username: {
+            required: true,
+            minlength: 3,
+          },
+          email: {
+            required: true,
+            email: true,
+          },
+        },
+        messages: {
+          username: {
+            required: "Please enter your username!",
+            minlength: "Your username must consist of a least 3 characters!",
+          },
+          email: {
+            required: "Please enter your email!",
+            email: "Please enter a valid email address!",
+          },
+        },
+      });
+      $("#change-password").validate({
+        rules: {
+          current_password: {
+            required: true,
+            minlength: 6,
+          },
+          new_password: {
+            required: true,
+            minlength: 6,
+          },
+          confirm_new_password: {
+            required: true,
+            minlength: 6,
+            equalTo: "#new_password",
+          },
+        },
+        messages: {
+          current_password: {
+            required: "Please enter your password!",
+            minlength: "Your password must consist of a least 6 characters!",
+          },
+          new_password: {
+            required: "Please enter your password!",
+            minlength: "Your password must consist of a least 6 characters!",
+          },
+          confirm_new_password: {
+            required: "Please provide your password!",
+            minlength: "Your password must consist of a least 6 characters!",
+            equalTo: "Please enter the same password as above!",
+          },
+        },
+      });
+    });
+  </script>
+  <!--Set username into infoUserHeader-->
+  <script>
+    function getCookie(name) {
+      const nameEQ = name + "=";
+      const ca = document.cookie.split(";");
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == " ") c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+      }
+      return null;
+    }
+    const username = getCookie("username");
+    const avatar = getCookie("avatar");
+    const infoUserHeader = document.querySelector("#infoUserHeader");
+    if (username) {
+      infoUserHeader.setAttribute("data-bs-toggle", "dropdown");
+      infoUserHeader.children[2].innerText = username;
+    } else {
+      infoUserHeader.removeAttribute("data-bs-toggle");
+      infoUserHeader.children[2].innerText = "Sign In";
+    }
+    if (avatar) {
+      infoUserHeader.children[0].classList.add("d-none");
+      infoUserHeader.children[1].classList.remove("d-none");
+      infoUserHeader.children[1].setAttribute(
+        "src",
+        `/assets/img/avatar-user/${avatar}`
+      );
+    } else {
+      infoUserHeader.children[0].classList.remove("d-none");
+      infoUserHeader.children[1].classList.add("d-none");
+    }
+  </script>
+  <script>
+    const navTitle = "<%= locals.nav %>";
+    const pathPage = document.querySelector("#path-page");
+    const navElement = document.querySelector(`.${navTitle}`);
+    const liElement = document.querySelectorAll("#main-nav >li");
+
+    let navTmp = navElement;
+    let path = "";
+    let navActive = navElement.children[0].children[1].textContent;
+
+    while (!navTmp.parentNode.querySelector("#main-nav")) {
+      if (navTmp.classList.contains("nav-item")) {
+        navTmp.children[0].classList.add("active");
+        path += navTmp.children[0].children[1].textContent + "/";
+      }
+      navTmp = navTmp.parentNode;
+    }
+    pathPage.children[0].children[0].innerText =
+      "Pages " + path.split("/").reverse().join(" / ");
+    pathPage.children[1].innerText = navActive;
+  </script>
+</html>

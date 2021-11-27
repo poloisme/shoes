@@ -1,0 +1,93 @@
+<div class="row">
+  <div class="col-12 col-lg-8 m-auto">
+    
+    <form
+      id="create-new-user"
+      class="multisteps-form__form mb-8"
+      style="height: 465px"
+      action=""
+      method="POST"
+      enctype="multipart/form-data"
+    >
+      <!--single form panel-->
+      <div
+        class="
+          card
+          multisteps-form__panel
+          p-3
+          border-radius-xl
+          bg-white
+          js-active
+        "
+        data-animation="FadeIn"
+      >
+        <h5 class="font-weight-bolder mb-0">About me</h5>
+        <p class="mb-0 text-sm">Mandatory informations</p>
+        <div class="multisteps-form__content">
+          <div class="row mt-3">
+            <div class="col-12">
+              <label>Avatar</label>
+              <label for="avatar_img" class="form-control dropzone text-center cursor-pointer overflow-hidden">
+                <p>Choose your avatar</p>
+                <input id="avatar_img" type='file' class="d-none" onchange="readURL(this);" name="avatar" />
+                <img id="preview-avatar" src="" class="w-10 avatar avatar-xl d-none" />
+              </label>
+          </div>
+          <div class="row mt-3">
+            <div class="col-12 col-sm-6">
+              <label for="username">Username</label>
+              <input
+                id="username"
+                class="multisteps-form__input form-control"
+                type="text"
+                placeholder="eg. Username"
+                name="username"
+              />
+            </div>
+            <div class="col-12 col-sm-6 mt-3 mt-sm-0">
+              <label for="email">Email</label>
+              <input
+                id="email"
+                class="multisteps-form__input form-control"
+                type="text"
+                placeholder="eg. Email"
+                name="email"
+              />
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-12 col-sm-6">
+              <label for="password">Password</label>
+              <input
+                id="password"
+                class="multisteps-form__input form-control"
+                type="password"
+                placeholder="eg. ******"
+                name="password"
+              />
+            </div>
+            <div class="col-12 col-sm-6 mt-3 mt-sm-0">
+              <label for="confirm_password">Repeat Password</label>
+              <input
+                id="confirm_password"
+                class="multisteps-form__input form-control"
+                type="password"
+                placeholder="eg. ******"
+                name="confirm_password"
+              />
+            </div>
+          </div>
+          <div class="button-row d-flex mt-4">
+            <button
+              class="btn bg-gradient-dark ms-auto mb-0"
+              type="submit"
+              title="Send"
+            >
+              Send
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

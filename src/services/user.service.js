@@ -11,10 +11,11 @@ const createNewUser = (newUser) => {
       const password_hash = await bcrypt.hash(newUser.password, salt);
 
       const user = await db.User.create({
+        avatar: newUser.avatar || "default-avatar.jpg",
         username: newUser.username,
         password_hash: password_hash,
         email: newUser.email,
-        status: newUser.status || 10,
+        status: newUser.status || 1,
         role_id: newUser.role_id || 4,
       });
       resolve({
@@ -32,7 +33,7 @@ const getAllUser = () => {
   return new Promise(async (resolve, reject) => {
     try {
       const res = await db.User.findAll({
-        attributes: ["username", "email", "status", "role_id"],
+        attributes: ["id", "avatar", "username", "email", "status", "role_id"],
       });
       resolve({ status: "success", data: res });
     } catch (err) {
@@ -45,7 +46,15 @@ const getUser = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
       const res = await db.User.findOne({
-        attributes: ["username", "password_hash", "email", "status", "role_id"],
+        attributes: [
+          "id",
+          "avatar",
+          "username",
+          "password_hash",
+          "email",
+          "status",
+          "role_id",
+        ],
         where: { ...data },
       });
       if (res === null) {
@@ -76,6 +85,13 @@ const countAndGetUsers = () => {
 const updateUser = (data, user) => {
   return new Promise(async (resolve, reject) => {
     try {
+      const { password } = user;
+      if (password) {
+        //Create password_hash
+        const salt = await bcrypt.genSalt(10);
+        const password_hash = await bcrypt.hash(password, salt);
+        user = { ...user, password_hash };
+      }
       const res = await db.User.update(
         { ...user },
         {
@@ -110,6 +126,19 @@ const deleteUser = (data) => {
     }
   });
 };
+//get field users
+const getFieldUsers = (field) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const res = await db.User.findAll({
+        attributes: field,
+      });
+      resolve({ status: "success", data: res });
+    } catch (err) {
+      reject(err);
+    }
+  });
+};
 
 module.exports = {
   createNewUser,
@@ -118,4 +147,5 @@ module.exports = {
   countAndGetUsers,
   updateUser,
   deleteUser,
+  getFieldUsers,
 };

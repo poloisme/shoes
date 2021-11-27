@@ -7,10 +7,9 @@ const enCodedToken = (data, secret) => {
         {
           ...data,
           iat: new Date().getTime(),
-          // exp: new Date().setDate(new Date().getDate() + 1),
-          exp: Math.floor(Date.now() / 1000) + 60 * 5, //5 minutes
         },
-        secret
+        secret,
+        { expiresIn: parseInt(process.env.TIME_EXP) * 1000 * 60 }
       );
       resolve(token);
     } catch (err) {

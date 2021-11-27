@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/head.ejs') %>
+  </head>
+  <body class="g-sidenav-show bg-gray-100">
+    <!-- Navbar left -->
+    <%- include('../partials/navbar-left.ejs') %>
+    <!-- End Navbar left -->
+    <main
+      class="
+        main-content
+        position-relative
+        max-height-vh-100
+        h-100
+        mt-1
+        border-radius-lg
+      "
+    >
+      <!--Navbar top -->
+      <%- include('../partials/navbar-top.ejs') %>
+      <!-- End Navbar top -->
+      <!--users body-->
+      <div class="container-fluid py-4">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <!-- Card header -->
+              <div class="card-header pb-0">
+                <div class="d-lg-flex">
+                  <div>
+                    <h5 class="mb-0">User List</h5>
+                  </div>
+                  <div class="ms-auto my-auto mt-lg-0 mt-4">
+                    <div class="ms-auto my-auto">
+                      <a
+                        href="/users/create"
+                        class="btn bg-gradient-primary btn-sm mb-0"
+                        >+&nbsp; New User</a
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body px-0 pb-0">
+                <div class="table-responsive">
+                  <%- include('../partials/users/table-user.ejs') %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <%- include('../partials/fixed-plugin.ejs') %>
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="confirm-delete-model"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="confirm-delete-model-label"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="confirm-delete-model-label">
+              Confirm Delete
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">are you sure to delete it?</div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn bg-gradient-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button
+              id="btn-confirm-delete"
+              type="button"
+              class="btn bg-gradient-primary"
+            >
+              Confirm
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <%- include('../partials/scripts.ejs') %>
+  <!--Set username into infoUserHeader-->
+  <script>
+    function getCookie(name) {
+      const nameEQ = name + "=";
+      const ca = document.cookie.split(";");
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == " ") c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+      }
+      return null;
+    }
+    const username = getCookie("username");
+    const avatar = getCookie("avatar");
+    const infoUserHeader = document.querySelector("#infoUserHeader");
+    if (username) {
+      infoUserHeader.setAttribute("data-bs-toggle", "dropdown");
+      infoUserHeader.children[2].innerText = username;
+    } else {
+      infoUserHeader.removeAttribute("data-bs-toggle");
+      infoUserHeader.children[2].innerText = "Sign In";
+    }
+    if (avatar) {
+      infoUserHeader.children[0].classList.add("d-none");
+      infoUserHeader.children[1].classList.remove("d-none");
+      infoUserHeader.children[1].setAttribute(
+        "src",
+        `/assets/img/avatar-user/${avatar}`
+      );
+    } else {
+      infoUserHeader.children[0].classList.remove("d-none");
+      infoUserHeader.children[1].classList.add("d-none");
+    }
+  </script>
+  <script>
+    const navTitle = "<%= locals.nav %>";
+    const pathPage = document.querySelector("#path-page");
+    const navElement = document.querySelector(`.${navTitle}`);
+    const liElement = document.querySelectorAll("#main-nav >li");
+
+    let navTmp = navElement;
+    let path = "";
+    let navActive = navElement.children[0].children[1].textContent;
+
+    while (!navTmp.parentNode.querySelector("#main-nav")) {
+      if (navTmp.classList.contains("nav-item")) {
+        navTmp.children[0].classList.add("active");
+        path += navTmp.children[0].children[1].textContent + "/";
+      }
+      navTmp = navTmp.parentNode;
+    }
+    pathPage.children[0].children[0].innerText =
+      "Pages " + path.split("/").reverse().join(" / ");
+    pathPage.children[1].innerText = navActive;
+  </script>
+  <script>
+    const listBtn = document.querySelectorAll(".btn-model-delete");
+    const btnConfirmDelete = document.querySelector("#btn-confirm-delete");
+    listBtn.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const url = btn.getAttribute("href");
+        btnConfirmDelete.addEventListener("click", (e) => {
+          $.ajax({
+            url: url,
+            type: "delete",
+            success: function (res, textStatus, jQxhr) {
+              window.location = "/users";
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+              console.log(errorThrown);
+            },
+          });
+        });
+      });
+    });
+  </script>
+</html>

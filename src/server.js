@@ -3,10 +3,12 @@ const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
 const methodOverride = require("method-override");
+const cookieParser = require("cookie-parser");
 const viewEngine = require("./configs/viewEngine");
 const initRoute = require("./routes/web");
 const connectDB = require("./configs/connectDB");
 const cors = require("./middlewares/cors");
+const ejs = require("ejs");
 
 dotenv.config();
 
@@ -17,6 +19,7 @@ app.use(morgan("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
+app.use(cookieParser());
 app.use(cors);
 
 //config views engine

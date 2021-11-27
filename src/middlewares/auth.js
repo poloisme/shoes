@@ -3,14 +3,12 @@ const { deCodedToken } = require("../util/handleJWT");
 //auth token
 const authToken = async (req, res, next) => {
   try {
-    const authorizationHeader = req.headers["authorization"];
+    const authorizationCookie = req.cookies.authorization;
     // 'Beaer [token]'
-    const token = authorizationHeader;
+    const token = authorizationCookie;
 
     if (!token) {
-      const err = new Error("unauthorize!");
-      err.status = 401;
-      return next(err);
+      res.redirect("/sign-in").render("sign-in", { message: "unauthorize!" });
     }
     const data = await deCodedToken(token, process.env.JWT_SECRET);
     //send data to next middleware

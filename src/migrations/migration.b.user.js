@@ -11,6 +11,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER(11).UNSIGNED,
       },
+      avatar: {
+        allowNull: false,
+        type: Sequelize.STRING,
+        defaultValue: "default-avatar.jpg",
+      },
       auth_key: {
         type: Sequelize.STRING,
       },

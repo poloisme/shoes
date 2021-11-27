@@ -47,6 +47,9 @@ const schemas = {
     password: Joi.string()
       .pattern(new RegExp("^[a-zA-Z0-9]{3,30}$"))
       .required(),
+    confirm_password: Joi.string()
+      .pattern(new RegExp("^[a-zA-Z0-9]{3,30}$"))
+      .required(),
     email: Joi.string()
       .email({
         minDomainSegments: 2,
@@ -73,11 +76,14 @@ const schemas = {
         tlds: { allow: ["com", "net"] },
       })
       .required(),
-    status: Joi.number().valid(1, 10),
   }),
   userSchemaCreate: Joi.object({
+    avatar: Joi.string(),
     username: Joi.string().alphanum().min(3).max(30).required(),
     password: Joi.string()
+      .pattern(new RegExp("^[a-zA-Z0-9]{3,30}$"))
+      .required(),
+    confirm_password: Joi.string()
       .pattern(new RegExp("^[a-zA-Z0-9]{3,30}$"))
       .required(),
     email: Joi.string()
@@ -88,6 +94,20 @@ const schemas = {
       .required(),
     status: Joi.number().valid(1, 10),
     role_id: Joi.number().valid(1, 2, 3, 4),
+  }),
+  userSchemaChangePassword: Joi.object({
+    current_password: Joi.string()
+      .pattern(new RegExp("^[a-zA-Z0-9]{3,30}$"))
+      .required(),
+    new_password: Joi.string()
+      .pattern(new RegExp("^[a-zA-Z0-9]{3,30}$"))
+      .required(),
+    confirm_new_password: Joi.string()
+      .pattern(new RegExp("^[a-zA-Z0-9]{3,30}$"))
+      .required(),
+  }),
+  userSchemaEditAvatar: Joi.object({
+    avatar: Joi.string(),
   }),
 };
 
