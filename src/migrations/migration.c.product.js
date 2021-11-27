@@ -58,6 +58,16 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
+      pro_status: {
+        allowNull: false,
+        defaultValue: "in stock",
+        type: Sequelize.ENUM("in stock", "out stock"),
+      },
+      pro_quantity: {
+        allowNull: false,
+        defaultValue: 0,
+        type: Sequelize.INTEGER.UNSIGNED,
+      },
       users_id_create: {
         allowNull: false,
         type: Sequelize.INTEGER.UNSIGNED,

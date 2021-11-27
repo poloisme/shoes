@@ -25,6 +25,8 @@ module.exports = (sequelize, DataTypes) => {
       pro_view: DataTypes.INTEGER.UNSIGNED,
       pro_rank: DataTypes.INTEGER.UNSIGNED,
       pro_size: DataTypes.STRING,
+      pro_status: DataTypes.ENUM("in stock", "out stock"),
+      pro_quantity: DataTypes.INTEGER.UNSIGNED,
       users_id_create: DataTypes.INTEGER.UNSIGNED,
       users_id_update: DataTypes.INTEGER.UNSIGNED,
       brand_id: DataTypes.INTEGER.UNSIGNED,
