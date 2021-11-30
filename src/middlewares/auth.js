@@ -1,3 +1,5 @@
+const dotenv = require("dotenv");
+dotenv.config();
 const { deCodedToken } = require("../util/handleJWT");
 
 //auth token

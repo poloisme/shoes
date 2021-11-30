@@ -1,3 +1,6 @@
+const dotenv = require("dotenv");
+dotenv.config();
+
 const cors = (req, res, next) => {
   //URL allow to connect
   res.setHeader("Access-Control-Allow-Origin", process.env.URL);

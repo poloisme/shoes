@@ -1,3 +1,5 @@
+const dotenv = require("dotenv");
+dotenv.config();
 var jwt = require("jsonwebtoken");
 
 const enCodedToken = (data, secret) => {

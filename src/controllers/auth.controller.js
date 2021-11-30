@@ -1,3 +1,5 @@
+const dotenv = require("dotenv");
+dotenv.config();
 const userService = require("../services/user.service");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;

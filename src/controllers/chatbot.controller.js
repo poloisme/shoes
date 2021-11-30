@@ -1,6 +1,9 @@
+const dotenv = require("dotenv");
+dotenv.config();
+
 const getWebhook = (req, res, next) => {
   // Your verify token. Should be a random string.
-  let VERIFY_TOKEN = "<YOUR_VERIFY_TOKEN>";
+  let VERIFY_TOKEN = process.env.WEBHOOK_VERIFY_TOKEN;
 
   // Parse the query params
   let mode = req.query["hub.mode"];
