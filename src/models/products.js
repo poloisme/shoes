@@ -29,7 +29,8 @@ module.exports = (sequelize, DataTypes) => {
       pro_quantity: DataTypes.INTEGER.UNSIGNED,
       users_id_create: DataTypes.INTEGER.UNSIGNED,
       users_id_update: DataTypes.INTEGER.UNSIGNED,
-      brand_id: DataTypes.INTEGER.UNSIGNED,
+      brands_id: DataTypes.INTEGER.UNSIGNED,
+      categories_id: DataTypes.INTEGER.UNSIGNED,
     },
     {
       sequelize,

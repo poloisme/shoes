@@ -25,7 +25,7 @@ const authRole = (roles) => {
   return (req, res, next) => {
     try {
       const data = res.locals.data;
-      if (roles.includes(data.role_id)) {
+      if (roles.includes(data.roles_id)) {
         return next();
       } else {
         const err = new Error("Forbidden!");

@@ -21,7 +21,7 @@ const signUp = async (req, res, next) => {
       {
         id: response.data.id,
         username: response.data.username,
-        role_id: response.data.role_id,
+        roles_id: response.data.roles_id,
       },
       process.env.JWT_SECRET
     );
@@ -68,7 +68,7 @@ const signIn = async (req, res, next) => {
       {
         id: response.data.id,
         username: response.data.username,
-        role_id: response.data.role_id,
+        roles_id: response.data.roles_id,
       },
       process.env.JWT_SECRET
     );

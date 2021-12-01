@@ -15,11 +15,11 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      product_id: {
+      products_id: {
         allowNull: false,
         type: Sequelize.INTEGER.UNSIGNED,
         references: {
-          model: "Product",
+          model: "Products",
           key: "id",
         },
       },

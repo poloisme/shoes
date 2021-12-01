@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       title: DataTypes.STRING,
       comment: DataTypes.STRING,
       users_id: DataTypes.INTEGER.UNSIGNED,
-      product_id: DataTypes.INTEGER.UNSIGNED,
+      products_id: DataTypes.INTEGER.UNSIGNED,
     },
     {
       sequelize,

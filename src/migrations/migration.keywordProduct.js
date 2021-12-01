@@ -4,26 +4,26 @@ const { DataTypes } = require("sequelize");
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("Keyword_product", {
+    await queryInterface.createTable("KeywordProducts", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER.UNSIGNED,
       },
-      keyword_id: {
+      keywords_id: {
         allowNull: false,
         type: Sequelize.INTEGER.UNSIGNED,
         references: {
-          model: "Keyword",
+          model: "Keywords",
           key: "id",
         },
       },
-      product_id: {
+      products_id: {
         allowNull: false,
         type: Sequelize.INTEGER.UNSIGNED,
         references: {
-          model: "Product",
+          model: "Products",
           key: "id",
         },
       },
@@ -40,6 +40,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("Keyword_product");
+    await queryInterface.dropTable("KeywordProducts");
   },
 };

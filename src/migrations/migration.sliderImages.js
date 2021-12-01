@@ -4,7 +4,7 @@ const { DataTypes } = require("sequelize");
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("Slider_images", {
+    await queryInterface.createTable("SliderImages", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -14,11 +14,11 @@ module.exports = {
       file: {
         type: Sequelize.STRING,
       },
-      slider_id: {
+      sliders_id: {
         allowNull: false,
         type: Sequelize.INTEGER.UNSIGNED,
         references: {
-          model: "Slider",
+          model: "Sliders",
           key: "id",
         },
       },
@@ -35,6 +35,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("Slider_images");
+    await queryInterface.dropTable("SliderImages");
   },
 };

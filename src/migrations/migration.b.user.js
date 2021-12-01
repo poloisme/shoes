@@ -40,12 +40,12 @@ module.exports = {
         defaultValue: 10,
         type: Sequelize.INTEGER.UNSIGNED,
       },
-      role_id: {
+      roles_id: {
         allowNull: false,
-        defaultValue: 1,
+        defaultValue: 4,
         type: Sequelize.INTEGER.UNSIGNED,
         references: {
-          model: "Role",
+          model: "Roles",
           key: "id",
         },
       },

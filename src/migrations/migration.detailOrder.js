@@ -4,7 +4,7 @@ const { DataTypes } = require("sequelize");
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("Detail_order", {
+    await queryInterface.createTable("DetailOrders", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -19,19 +19,19 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DECIMAL(11, 2).UNSIGNED,
       },
-      order_id: {
+      orders_id: {
         allowNull: false,
         type: Sequelize.INTEGER.UNSIGNED,
         references: {
-          model: "Order",
+          model: "Orders",
           key: "id",
         },
       },
-      product_id: {
+      products_id: {
         allowNull: false,
         type: Sequelize.INTEGER.UNSIGNED,
         references: {
-          model: "Product",
+          model: "Products",
           key: "id",
         },
       },
@@ -48,6 +48,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("Detail_order");
+    await queryInterface.dropTable("DetailOrders");
   },
 };

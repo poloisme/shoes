@@ -14,11 +14,11 @@ module.exports = (sequelize, DataTypes) => {
   Images.init(
     {
       file: DataTypes.STRING,
-      product_id: DataTypes.INTEGER.UNSIGNED,
+      products_id: DataTypes.INTEGER.UNSIGNED,
     },
     {
       sequelize,
-      modelName: "Images",
+      modelName: "Image",
     }
   );
   return Images;

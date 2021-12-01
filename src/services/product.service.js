@@ -4,7 +4,7 @@ const db = require("../models/index");
 const getAllProduct = () => {
   return new Promise(async (resolve, reject) => {
     try {
-      const res = await db.Product.findAll({});
+      const res = await db.Product.findAll();
       resolve({ status: "success", data: res });
     } catch (err) {
       reject(err);

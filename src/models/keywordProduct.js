@@ -13,8 +13,8 @@ module.exports = (sequelize, DataTypes) => {
   }
   KeywordProduct.init(
     {
-      keyword_id: DataTypes.INTEGER.UNSIGNED,
-      product_id: DataTypes.INTEGER.UNSIGNED,
+      keywords_id: DataTypes.INTEGER.UNSIGNED,
+      products_id: DataTypes.INTEGER.UNSIGNED,
     },
     {
       sequelize,

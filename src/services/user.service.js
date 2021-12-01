@@ -16,7 +16,7 @@ const createNewUser = (newUser) => {
         password_hash: password_hash,
         email: newUser.email,
         status: newUser.status || 1,
-        role_id: newUser.role_id || 4,
+        roles_id: newUser.roles_id || 4,
       });
       resolve({
         status: "success",
@@ -33,7 +33,7 @@ const getAllUser = () => {
   return new Promise(async (resolve, reject) => {
     try {
       const res = await db.User.findAll({
-        attributes: ["id", "avatar", "username", "email", "status", "role_id"],
+        attributes: ["id", "avatar", "username", "email", "status", "roles_id"],
       });
       resolve({ status: "success", data: res });
     } catch (err) {
@@ -53,7 +53,7 @@ const getUser = (data) => {
           "password_hash",
           "email",
           "status",
-          "role_id",
+          "roles_id",
         ],
         where: { ...data },
       });
@@ -71,7 +71,7 @@ const countAndGetUsers = () => {
   return new Promise(async (resolve, reject) => {
     try {
       const { count, rows } = await db.User.findAndCountAll({
-        attributes: ["username", "email", "status", "role_id"],
+        attributes: ["username", "email", "status", "roles_id"],
         // offset: 10, same skip
         // limit: 1,
       });
